@@ -27,7 +27,15 @@ export default defineNuxtConfig({
 
   css: [],
   modules: ['@nuxt/fonts', 'vuetify-nuxt-module'],
-
+  nitro: {
+    storage: {
+      redis: {
+        driver: 'redis',
+        url: process.env.REDIS_URL ?? process.env.KV_URL,
+        
+      }
+    }
+  },
   vuetify: {
  
     moduleOptions: {
@@ -46,11 +54,13 @@ export default defineNuxtConfig({
 
       // /* If customizing sass global variables ($utilities, $reset, $color-pack, $body-font-family, etc) */
       // disableVuetifyStyles: true,
+ 
       /*
       styles: {
         configFile: 'assets/settings.scss',
       },
       */
+  
     },
   },
 })
