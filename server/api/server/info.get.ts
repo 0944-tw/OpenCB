@@ -6,5 +6,5 @@ export default defineEventHandler(async (event) => {
     }
     if (process.env.VERCEL) data.platform = "vercel";
     if (process.env.NETLIFY) data.platform = "netlify";
-    
+    return data
   });
