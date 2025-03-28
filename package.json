@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@nuxt/eslint": "1.2.0",
+    "@prisma/client": "^6.5.0",
+    "@vercel/edge": "^1.2.1",
     "eslint": "^9.0.0",
     "nuxt": "3.12.4",
     "vue": "latest",
