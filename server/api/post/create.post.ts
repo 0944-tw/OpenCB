@@ -1,32 +1,32 @@
-import { createClient } from "redis";
-import { v7 } from 'uuid';
-
+import { ipAddress } from "@vercel/edge";
+import { createArticle } from "@/libs/db"
 export default defineEventHandler(async (event) => {
-  // get request body
   const data = await readBody(event);
-  if(!data.title || !data.content) {
-    setResponseStatus(event, 400);
-    return { status: "error", message: "Title and content are required" };
+  const clientAddress = event.node.req.socket.remoteAddress
+  var ip;
+  if (process.env.VERCEL) {
+    ip = ipAddress(event);
+  } else {
+    ip = clientAddress
   }
-  //
-  const posts_storage = await useStorage("posts");
-  var last_post_id = await posts_storage.get("id") as number;
-  if(!last_post_id) {
-    posts_storage.set("id", 0); 
-    last_post_id = 0;
+  
+  if (!ip) {
+    return {
+      "success": false,
+      "message": "Failed to get your IP Address",
+      "message_i18n": "article.create.error.failed_ip"
+    }
   }
-  //
-  const key = v7();
-  //
-  posts_storage.setItem(last_post_id,{
-    id: last_post_id,
-    title: data.title,
-    content: data.content,
-    delete_key: key
+  createArticle({
+     content: data.content,
+     ip: ip,
+     status: "pending",
+     imageUrl: data.imageUrl || null,
+     rejectedReason: ""
   })
   return {
-    status: "ok",
-    id: last_post_id + 1,
-    delete_key: key
-  };
+    "success": "true",
+    "message": "Successfully to create article",
+    "message_i18n": "article.create.success"
+  }
 });
