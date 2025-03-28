@@ -1,5 +1,5 @@
 import { ipAddress } from "@vercel/edge";
-import { createArticle } from "@/libs/db"
+import { createArticle } from "../../../libs/db"
 export default defineEventHandler(async (event) => {
   const data = await readBody(event);
   const clientAddress = event.node.req.socket.remoteAddress

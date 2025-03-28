@@ -19,6 +19,7 @@
     "@vercel/edge": "^1.2.1",
     "eslint": "^9.0.0",
     "nuxt": "3.12.4",
+    "prisma": "^6.5.0",
     "vue": "latest",
     "vuetify": "^3.7.3"
   },
@@ -29,6 +30,7 @@
     "sass-embedded": "^1.80.3",
     "typescript": "^5.6.3",
     "vue-tsc": "^2.1.6",
-    "vuetify-nuxt-module": "^0.18.3"
+    "vuetify-nuxt-module": "^0.18.3",
+    "prisma": "^6.5.0"
   }
 }
