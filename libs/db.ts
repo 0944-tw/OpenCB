@@ -3,7 +3,7 @@
 // 其實有點完全借鑒了。不過還是要感謝owen0924 the pro
 
 import { PrismaClient } from "@prisma/client";
-import { Article, Status } from "@/types";
+import { Article } from "@/types";
 import path from "path";
 
 declare global {
@@ -16,51 +16,69 @@ if (process.env.NODE_ENV !== "production") {
         global.prisma = prisma;
     }
 }
-export async function getArticle(id: string): Promise<Article> {
-   const article = await prisma.articles.findUnique({
-    where: {
-        "id": id
-    }
-   })
-   return article
+export async function getArticle(id: string): Promise<Article | void> {
+
+    const article = await prisma.article.findUnique({
+        where: {
+            "id": id
+        }
+    })
+    if (!article) return;
+    return article
 }
 
-export async function updateArticleStatus(id: string,status: Status) {
-  const article = await prisma.articles.update({
-    where: {
-        "id": id
-    },
-    data: {
-        "status": status
-    }
-  })
+export async function updateArticleStatus(id: string, status: string) {
+    const article = await prisma.article.update({
+        where: {
+            "id": id
+        },
+        data: {
+            "status": status
+        }
+    })
 }
 
-export async function listsArticle(type?: Status): Promise<[Article]> {
+export async function listsArticles(type?: string): Promise<Article[]> {
     let articles;
     if (type) {
-        articles = await prisma.articles.findMany({
+        articles = await prisma.article.findMany({
             where: {
                 "status": type
             }
         })
     } else {
-        articles = await prisma.articles.findMany({})
+        articles = await prisma.article.findMany({})
     }
-    return articles.map((article: Article) => ({
+    return articles.map((article) => ({
         ...article,
-        createdAt: article.createdAt.toISOString(),
+        createdAt: new Date(article.createdAt),
     }));
 
 }
 
-export async function createArticle(Article: Omit<Article, "id" | "createdAt">): Promise<Article> {
-    const newArticle = await prisma.articles.create({
-        data: Article
+export async function createArticle(Article: Omit<Article, "id" | "createdAt">): Promise<string> {
+    const newArticle = await prisma.article.create({
+        data: Article,
+
     })
-    return {
-        ...newArticle,
-        createdDate: newArticle.createdAt.toISOString()
-    }
+    return newArticle.id
+}
+export async function submitArticle(content: string, imageUrl: string, ip: string): Promise<string> {
+    const article = await prisma.article.create({
+        data: {
+            content,
+            imageUrl: imageUrl || null,
+            status: "pending",
+            ip: ip
+        },
+    });
+    return article.id;
 }
 
+export async function removeArticle(id: string) {
+    await prisma.article.delete({
+        where: {
+            id: id
+        }
+    })
+}
