@@ -1,11 +1,11 @@
 export interface Article {
     id: string;
-    imageUrl?: string;
-    status: "pending" | "approved" | "rejected";
-    ip: string;
+    imageUrl: string | null;
+    status: string;
+    ip: string | null;
     createdAt: Date;
-    rejectedReason: string;
+    rejectedReason: string | null;
     content: string;
 }
 
-export type Status = "pending" | "approved" | "rejected"
+ 
