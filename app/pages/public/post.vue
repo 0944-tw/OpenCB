@@ -1,6 +1,6 @@
 <!-- Post your post -->
 <template>
-    
+
     <v-container class="d-flex justify-center align-center" style="height: 100vh">
         <v-row class="w-100">
             <v-col cols="12" sm="8" md="6" lg="4">
@@ -14,7 +14,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn  :loading="loading" variant="elevated" @click="submit" color="blue">發表</v-btn>
+                        <v-btn :loading="loading" variant="elevated" @click="submit" color="blue">發表</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -28,17 +28,15 @@ import { ref } from "vue";
 const title = ref("");
 const content = ref("");
 const loading = ref(false)
-const submit = () => {
+const submit = async () => {
     loading.value = true
-    fetch("/api/post/create", {
+    await $fetch("/api/all/create", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        body: {
             title: title.value,
             content: content.value,
-        }),
+        },
     })
+    loading.value = false
 };
 </script>
