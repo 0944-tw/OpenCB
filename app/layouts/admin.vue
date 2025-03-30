@@ -53,14 +53,9 @@
     },
     {
       icon: "mdi-gavel",
-      text: "待審核",
-      to: "/admin/pending",
-    },
-    {
-      icon: "mdi-send",
-      text: "已通過",
-      to: "/admin/approved",
-    },
+      text: "貼文",
+      to: "/admin/articles",
+    },  
     {
       icon: "mdi-delete",
       text: "垃圾桶",
