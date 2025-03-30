@@ -36,6 +36,7 @@ export async function updateArticleStatus(id: string, status: string) {
             "status": status
         }
     })
+    
 }
 
 export async function listsArticles(type?: string): Promise<Article[]> {
