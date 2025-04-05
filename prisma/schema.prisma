@@ -16,11 +16,12 @@ datasource db {
 
 
 model Article {
-  id        String   @id @default(uuid())
+  id        Int   @id @default(autoincrement())
   content   String
   imageUrl  String?
   status    String
   createdAt DateTime @default(now())
   rejectedReason String?
   ip String?
+  delete_key String @default(uuid())
 }
