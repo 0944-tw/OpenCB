@@ -52,7 +52,8 @@ const headers = [
   { title: "內容", value: "content" },
   { title: 'IP位置', value: 'ip' },
   { title: "創建日期", value: "createdAt" },
-  { title: "動作", value: "actions" }
+  { title: "動作", value: "actions" },
+  { title: "狀態", value: "status"}
 ];
 
 const loadArticles = async () => {

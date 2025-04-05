@@ -36,10 +36,21 @@
                     <template v-slot:loading>
                         <v-skeleton-loader type="table-row@5"></v-skeleton-loader>
                     </template>
-                    <template v-slot:item.actions="{ item }">
-                        <v-btn icon="mdi-check" variant="text" @click="showApproveModal(item.id)" />
-                        <v-btn icon="mdi-delete" variant="text" />
+                    <template v-slot:item.content="{ item }">
+                        <div class="text-truncate" style="max-width: 200px;">{{ item.content }}</div>
+                    </template>
+                    <template v-slot:item.status="{ item }">
+                        
+                    </template>
+                    <template v-slot:item.createdAt="{ item }">
+                        {{ new Date(item.createdAt).toLocaleDateString() }}
+                    </template>
 
+                    <template v-slot:item.actions="{ item }">
+                        <div class="d-flex ga-2 justify-end">
+                            <v-btn icon="mdi-check" variant="text" @click="showApproveModal(item.id)" size="small" />
+                            <v-btn icon="mdi-delete" variant="text" size="small" />
+                        </div>
                     </template>
                 </v-data-table>
 
@@ -65,8 +76,9 @@ const headers = [
     { title: "內容", value: "content" },
     { title: 'IP位置', value: 'ip' },
     { title: "創建日期", value: "createdAt" },
+    { title: "狀態", value: "status" },
     { title: '文章ID', value: 'id' },
-    { title: "動作", value: "actions" }
+    { title: "動作", value: "actions", align: 'end' }
 ];
 
 const loadArticles = async () => {
