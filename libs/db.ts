@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== "production") {
         global.prisma = prisma;
     }
 }
-export async function getArticle(id: string): Promise<Article | void> {
+export async function getArticle(id: any): Promise<Article | void> {
 
     const article = await prisma.article.findUnique({
         where: {
@@ -27,7 +27,7 @@ export async function getArticle(id: string): Promise<Article | void> {
     return article
 }
 
-export async function updateArticleStatus(id: string, status: string) {
+export async function updateArticleStatus(id: any, status: string) {
     const article = await prisma.article.update({
         where: {
             "id": id
@@ -57,14 +57,14 @@ export async function listsArticles(type?: string): Promise<Article[]> {
 
 }
 
-export async function createArticle(Article: Omit<Article, "id" | "createdAt">): Promise<string> {
+export async function createArticle(Article: Omit<Article, "id" | "createdAt">): Promise<number> {
     const newArticle = await prisma.article.create({
         data: Article,
 
     })
     return newArticle.id
 }
-export async function submitArticle(content: string, imageUrl: string, ip: string): Promise<string> {
+export async function submitArticle(content: string, imageUrl: string, ip: string): Promise<number> {
     const article = await prisma.article.create({
         data: {
             content,
@@ -76,7 +76,7 @@ export async function submitArticle(content: string, imageUrl: string, ip: strin
     return article.id;
 }
 
-export async function removeArticle(id: string) {
+export async function removeArticle(id: any) {
     await prisma.article.delete({
         where: {
             id: id
